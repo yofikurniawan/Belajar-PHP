@@ -1,0 +1,53 @@
+<html>
+<head>
+   <title>PDO: Mengubah Data</title>
+</head>
+<body>
+<h2>Demo mengubah data di dalam database (PDO)</h2>
+
+<?php
+  $nip = $_GET["nip"];
+
+  $dsn = "mysql:host=localhost;dbname=sipegdb";
+  $conn = new PDO($dsn, "root", "root");
+
+  if (!$conn) {
+    echo "Koneksi ke server gagal dilakukan.";
+    exit();
+  }
+
+  $query = "select nama, alamat, nohp from pegawai " .
+           "where nip = '$nip'";
+  $result = $conn->query($query);
+  if ($result) {
+    $row = $result->fetch(PDO::FETCH_NUM);
+  }
+?>
+
+<form action="pdo-update.php" method="post">
+   <strong>NIP:</strong><br />
+   <?php echo $nip; ?>
+   <input name="nip" type="hidden" 
+     value="<?php echo $nip; ?>">
+   <br /><br />
+   <strong>Nama:</strong><br />
+   <input name="nama" type="text" size="30" maxlength="25"
+   value="<?php echo $row[0]; ?>">
+   <br /><br />
+   <strong>Alamat:</strong><br />
+   <input name="alamat" type="text" size="50" 
+   maxlength="50" value="<?php echo $row[1]; ?>">
+   <br /><br />
+   <strong>No. HP:</strong><br />
+   <input name="nohp" type="text" size="15" maxlength="15"
+   value="<?php echo $row[2]; ?>">
+   <br /><br />
+   <input type="submit" name="btnSubmit" value="Simpan">
+</form>
+
+<?php
+  $conn = NULL;
+?>
+
+</body>
+</html>

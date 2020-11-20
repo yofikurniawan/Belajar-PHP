@@ -1,0 +1,62 @@
+<html>
+<head>
+  <title>Menampilkan Data</title>
+</head>
+<body>
+<h2>Demo menampilkan data dari database</h2>
+<?php
+
+$dbname = "sipegdb";
+$host = "localhost";
+$username = "root";
+$password = "root";
+
+$conn = mysqli_connect($host, $username, $password, 
+                       $dbname);
+
+if (mysqli_connect_errno()) {
+   echo "Koneksi ke server gagal dilakukan.";
+   exit();
+}
+
+$query = "select nip, nama, alamat, nohp " . 
+         "from pegawai order by nip";
+$result = mysqli_query($conn, $query);
+
+if ($result) {
+   ?>
+     <h4><u>Daftar Pegawai PT. Multidimension:</u></h4>
+     <table border="1">
+	    <tr>
+	      <th width="80">NIP</th>
+	      <th width="110">Nama</th>
+	      <th width="200">Alamat</th>
+	      <th width="130">No. HP</th>
+	    </tr>
+      <?php
+      while ($row = mysqli_fetch_row($result)) {
+      ?>
+	      <tr>
+	        <?php
+           $nip = $row[0];
+           $nama = $row[1];
+           $alamat = $row[2];
+           $nohp = $row[3];      
+           ?>
+           <td><?php echo $nip;?></td>
+           <td><?php echo $nama;?></td>
+           <td><?php echo $alamat;?></td>
+           <td><?php echo $nohp;?></td>
+        </tr>
+	   <?php
+     }
+     ?>
+     </table>
+   <?php
+   mysqli_free_result($result);
+}
+
+mysqli_close($conn);
+?>
+</body>
+</html>

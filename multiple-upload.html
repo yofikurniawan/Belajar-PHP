@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Form upload</title>
+</head>
+<body>
+
+<h2>Demo melakukan upload terhadap banyak file</h2>
+
+<ol>
+  <li>Tulis nama file yang akan di-upload atau gunakan 
+      tombol BROWSE untuk menentukan lokasi file 
+     (maksimal 5 file)</li>
+  <li>Ketika selesai, klik tombol 
+      <strong>Upload File</strong></li>
+</ol>
+<hr />
+
+<div align="center">
+<form action="multiple-upload.php" method="post" 
+      enctype="multipart/form-data">
+  <?php
+  for ($i=0; $i<5; $i++) { 
+  ?>
+    <input type="hidden" name="MAX_FILE_SIZE" 
+      value="1000000"><br />
+    <input type="file" name="file_user<?php echo $i; ?>" 
+      size="60">
+  <?php
+  }
+  ?>
+  <br /><br />
+  <input type="submit" value="Upload File">
+</form>
+</div>
+
+</body>
+</html>
